@@ -29,11 +29,6 @@ logger = logging.getLogger(__name__)
 app = Quart(__name__)
 app = cors(app, allow_origin=["http://localhost:3000", "http://127.0.0.1:5000"])
 
-STATIC_FOLDER = "/usr/src/app/frontend/build/static" 
-
-print("app.root_path:", app.root_path)
-print("Expected static files location:", os.path.join(app.root_path, "frontend", "build", "static"))
-
 # Serve index.html from the React build folder
 @app.route("/")
 async def serve_index():
