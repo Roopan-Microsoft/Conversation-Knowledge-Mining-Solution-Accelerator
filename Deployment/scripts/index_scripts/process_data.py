@@ -357,6 +357,7 @@ for path in paths:
                 "chunk_id" : document_id + '_' + str(chunk_num).zfill(2),
                 "content": chunk,       
             }
+        counter += 1
         try:
             v_contentVector = get_embeddings(str(d["content"]),openai_api_base,openai_api_version,openai_api_key)
         except:
@@ -377,6 +378,7 @@ for path in paths:
             }
         )
         
+        if counter % 10 == 0:
             result = search_client.upload_documents(documents=docs)
             docs = []
             print(f' {str(counter)} uploaded')
