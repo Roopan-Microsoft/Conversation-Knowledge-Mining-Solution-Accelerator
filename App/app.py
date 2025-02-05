@@ -34,26 +34,12 @@ STATIC_FOLDER = "/usr/src/app/frontend/build/static"
 print("app.root_path:", app.root_path)
 print("Expected static files location:", os.path.join(app.root_path, "frontend", "build", "static"))
 
-@app.route("/debug")
-async def debug():
-    return {
-        "app_root_path": app.root_path,
-        "files_in_build_js": os.listdir(os.path.join(app.root_path, "frontend", "build","static","js")) if os.path.exists(os.path.join(app.root_path, "frontend", "build","static","js")) else "Not found",
-        "files_in_build_css": os.listdir(os.path.join(app.root_path, "frontend", "build","static","css")) if os.path.exists(os.path.join(app.root_path, "frontend", "build","static","css")) else "Not found",
-        "files_in_build": os.listdir(os.path.join(app.root_path, "frontend", "build")) if os.path.exists(os.path.join(app.root_path, "frontend", "build")) else "Not found",
-        "static_files_path": os.path.join(app.root_path, "frontend", "build", "static"),
-        "app_static_files_path": os.path.join(app.root_path, "static"),
-        "app_files_in_static": os.listdir(os.path.join(app.root_path, "static")) if os.path.exists(os.path.join(app.root_path, "static")) else "Not found",
-        "files_in_static": os.listdir(os.path.join(app.root_path, "frontend", "build", "static")) if os.path.exists(os.path.join(app.root_path, "frontend", "build", "static")) else "Not found"
-    }
-
 # Serve index.html from the React build folder
 @app.route("/")
 async def serve_index():
     return await send_from_directory(
         os.path.join(app.root_path, "static"), "index.html"
     )
-
 
 @app.route("/favicon.ico")
 async def favicon():
@@ -62,7 +48,6 @@ async def favicon():
         "favicon.ico",
         mimetype="image/x-icon",
     )
-
 
 # Serve static files (JS, CSS, images, etc.)
 @app.route("/static/<path:path>")
